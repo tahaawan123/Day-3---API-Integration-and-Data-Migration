@@ -3,6 +3,8 @@ import { TiTick } from "react-icons/ti";
 import Image from "next/image";
 import { AiOutlineExclamationCircle, AiOutlineShoppingCart } from "react-icons/ai";
 import Link from "next/link";
+import { FaAngleDown } from "react-icons/fa";
+
 
 export default function Header() {
   return (
@@ -20,7 +22,7 @@ export default function Header() {
           <div className="hidden lg:flex items-center gap-6 text-sm w-full sm:w-auto mt-2 lg:mt-0">
             <div className="flex items-center gap-1">
               <p className="hover:text-gray-300 transition">Eng</p>
-              <Image src={"vector.svg"} alt="vector" width={20} height={20} />
+              <FaAngleDown className="w-5 h-5"  />
             </div>
             <p className="hover:text-gray-300 transition"><Link href="/Faqs">Faqs</Link></p>
             <div className="flex items-center gap-1">
@@ -29,16 +31,20 @@ export default function Header() {
             </div>
           </div>
 
+
+
+
+
           {/* Mobile View (language, FAQ, Help - visible on small screens) */}
           <div className="lg:hidden w-full mt-2 text-center text-sm opacity-70">
             <div className="flex justify-between items-center">
               <div className="flex items-center gap-1">
                 <p className="hover:text-gray-300 transition">Eng</p>
-                <Image src={"/vector.svg"} alt="vector" width={15} height={10} />
+                <FaAngleDown className="w-5 h-5"  />
               </div>
               <p className="hover:text-gray-300 transition"> <Link href="/Faqs">Faqs</Link></p>
               <div className="flex items-center gap-1">
-                <Image src={"/alert.svg"} alt="alertcircle" width={20} height={20} />
+                <AiOutlineExclamationCircle width={20} height={20} />
                 <p className="hover:text-gray-300 transition">Need Help</p>
               </div>
             </div>
