@@ -1,6 +1,9 @@
 
 
 
+
+
+
 "use client";
 
 import { useEffect, useState } from "react";
@@ -32,7 +35,7 @@ const SingleProduct = () => {
   useEffect(() => {
     if (id) {
       // Sanity Query to fetch product by _id
-      const query = `*[_type == "products" && _id == $id]{
+      const query = `*[_type == "categories" && _id == $id]{
         _id,
         title,
         price,
@@ -109,7 +112,7 @@ const SingleProduct = () => {
             <div className="md:w-1/2">
               <h1 className="text-4xl font-extrabold text-gray-800 mb-4">{data.title}</h1>
               <p className="text-lg text-gray-700 mb-6">{data.description}</p>
-              <p className="text-2xl text-green-600 font-semibold mb-4">${data.price}</p>
+              <p className="text-2xl text-green-600 font-semibold mb-4"> $20</p>
              
            
 
@@ -117,7 +120,7 @@ const SingleProduct = () => {
               <div className="flex justify-center mt-auto">
                 <button
                   onClick={handleAddToCart} // Add the product to localStorage
-                  className="bg-yellow-500 text-white py-3 px-8 rounded-lg hover:bg-yellow-600 transform hover:scale-105 transition duration-300"
+                  className="bg-blue-500 text-white py-3 px-8 rounded-lg hover:bg-blue-600 transform hover:scale-105 transition duration-300"
                 >
                   Add to Cart
                 </button>

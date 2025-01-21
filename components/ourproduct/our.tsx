@@ -3,6 +3,7 @@
 
 
 import Image from "next/image";
+import Link from "next/link";
 
 
 export default function OurProduct() {
@@ -33,6 +34,7 @@ export default function OurProduct() {
             className="relative bg-white shadow-md rounded-lg overflow-hidden transition-transform hover:scale-105"
           >
             {/* Badge/Icon */}
+            <Link href="/product">
             {product.icon && (
               <Image src={product.icon} width={32} height={32} alt="icon" className="absolute top-2 left-2 w-8 h-8" />
             )}
@@ -51,6 +53,7 @@ export default function OurProduct() {
               </div>
               <Image src={product.cart} alt="cart" width={32} height={32} className="w-8 h-8" />
             </div>
+            </Link>
           </div>
         ))}
       </div>

@@ -3,7 +3,7 @@
 import Hero from "../components/Hero/Hero"
 import Feature from "@/components/featureproduct/featureproduct"
 
-import Categories from "@/components/categories/categories"
+import Categories from "./categories/page"
 import Ourproduct from "../components/ourproduct/our"
 import ExploreProduct from "@/components/Explore/explore"
 

@@ -1,13 +1,8 @@
 
-
-
-
-
-
-
 import { client } from "@/sanity/lib/client"
 import Image from "next/image"
 import { BsCart3 } from "react-icons/bs";
+import Link from "next/link";
 
 
 const getData = async ()=>{
@@ -22,6 +17,7 @@ const getData = async ()=>{
       title:string,
       imageUrl:string,
       price:number,
+      _id:number
      
     }
 
@@ -40,6 +36,7 @@ const getData = async ()=>{
             return(
   
                  <div key={i} className="gap-6 border shadow-lg hover:scale-105 ">
+                    <Link href={`/product/${item._id}`}>
               <Image 
                 className="rounded-t-lg h-[250px]"
                 src={item.imageUrl}
@@ -64,6 +61,7 @@ const getData = async ()=>{
       
 
               </div>
+              </Link>
               </div>
             
               
