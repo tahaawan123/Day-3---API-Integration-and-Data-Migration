@@ -101,7 +101,7 @@ const Modal: React.FC<ModalProps> = ({
                       {product.title}
                     </h4>
                     <p className="text-gray-600 text-sm">
-                      Price: ${product.price.toFixed(2)}{" "}
+                    Price: ${product.price !== null && product.price !== undefined ? product.price.toFixed(2) : "N/A"}{" "}
                     </p>
                     <p className="text-gray-600">Quantity: {product.quantity}</p>
                     <p className="text-gray-600 text-sm">
