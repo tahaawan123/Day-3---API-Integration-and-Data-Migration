@@ -1,13 +1,10 @@
-
-
-
 "use client";
 
 import { useEffect, useState } from "react";
 import { useParams } from "next/navigation";
 import SuccessModal from "@/components/SuccessModel";
 import Image from "next/image";
-import { client } from "@/sanity/lib/client";  // Ensure the client is set up properly
+import { client } from "@/sanity/lib/client";
 
 interface Product {
   _id: string;
@@ -27,11 +24,10 @@ const SingleProduct = () => {
   const [data, setData] = useState<Product | null>(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [successMessage, setSuccessMessage] = useState("");
-  const { id } = useParams(); // Ensure the id is a string from the route params
+  const { id } = useParams();
 
   useEffect(() => {
     if (id) {
-      // Sanity Query to fetch product by _id
       const query = `*[_type == "products" && _id == $id]{
         _id,
         title,
@@ -42,27 +38,12 @@ const SingleProduct = () => {
         "imageUrl": image.asset->url
       }`;
 
-      // Log the query to ensure it's being executed correctly
-      console.log("Executing query for product ID:", id);
-
-      // Fetch product data from Sanity
       client
         .fetch(query, { id })
         .then((res) => {
-          console.log("Response from Sanity:", res);
-
-          // Sanity query returns an array, so we need to access the first item
-          if (res && res.length > 0) {
-            setData(res[0]); // Update state with the product data
-          } else {
-            console.log("No product found with the given ID");
-            setData(null); // Handle case where no product is found
-          }
+          if (res && res.length > 0) setData(res[0]);
         })
-        .catch((err) => {
-          console.error("Error fetching product from Sanity:", err);
-          setData(null); // Set to null in case of error
-        });
+        .catch(() => setData(null));
     }
   }, [id]);
 
@@ -86,14 +67,14 @@ const SingleProduct = () => {
   };
 
   return (
-    <div className="bg-gradient-to-r from-blue-50 to-indigo-100 min-h-screen py-16">
+    <div className="bg-gradient-to-br from-purple-50 to-indigo-50 min-h-screen py-16">
       <div className="max-w-7xl mx-auto px-6 sm:px-8 lg:px-12">
         {!data ? (
           <div className="text-center">
-            <p className="text-3xl text-gray-600">Loading product...</p>
+            <p className="text-3xl text-gray-600 animate-pulse">Loading product...</p>
           </div>
         ) : (
-          <div className="bg-white p-8 rounded-lg shadow-xl flex flex-col md:flex-row md:space-x-12">
+          <div className="bg-white p-8 rounded-2xl shadow-2xl flex flex-col md:flex-row md:space-x-12">
             {/* Product Image */}
             <div className="md:w-1/2 flex justify-center mb-8 md:mb-0">
               <Image
@@ -101,23 +82,21 @@ const SingleProduct = () => {
                 alt={data.title}
                 width={500}
                 height={500}
-                className="object-contain h-80 w-80 rounded-xl shadow-lg hover:scale-105 transition-transform duration-300"
+                className="object-contain h-80 w-80 rounded-2xl shadow-lg hover:scale-105 transition-transform duration-300"
               />
             </div>
 
             {/* Product Details */}
             <div className="md:w-1/2">
-              <h1 className="text-4xl font-extrabold text-gray-800 mb-4">{data.title}</h1>
-              <p className="text-lg text-gray-700 mb-6">{data.description}</p>
-              <p className="text-2xl text-green-600 font-semibold mb-4">${data.price}</p>
-             
-           
+              <h1 className="text-4xl font-extrabold text-indigo-800 mb-4">{data.title}</h1>
+              <p className="text-lg text-gray-700 mb-6 leading-relaxed">{data.description}</p>
+              <p className="text-2xl text-green-700 font-semibold mb-4">${data.price}</p>
 
               {/* Add to Cart Button */}
               <div className="flex justify-center mt-auto">
                 <button
-                  onClick={handleAddToCart} // Add the product to localStorage
-                  className="bg-yellow-500 text-white py-3 px-8 rounded-lg hover:bg-yellow-600 transform hover:scale-105 transition duration-300"
+                  onClick={handleAddToCart}
+                  className="bg-gradient-to-r from-indigo-500 to-purple-500 text-white py-3 px-8 rounded-2xl hover:shadow-lg transform hover:scale-105 transition-all duration-300"
                 >
                   Add to Cart
                 </button>

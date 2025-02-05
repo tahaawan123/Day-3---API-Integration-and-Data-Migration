@@ -1,7 +1,3 @@
-
-
-
-
 import React from "react";
 import { useRouter } from "next/navigation";
 
@@ -23,18 +19,20 @@ const SuccessModal: React.FC<SuccessModalProps> = ({
   if (!isOpen) return null;
 
   return (
-    <div className="fixed inset-0 bg-gray-600 bg-opacity-50 flex items-center justify-center z-50">
-      <div className="bg-white p-6 rounded-lg shadow-lg w-ful max-w-md relative">
+    <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+      <div className="bg-white p-6 rounded-xl shadow-2xl w-full max-w-md relative">
+        {/* Close Button */}
         <button
           onClick={onClose}
-          className="absolute top-2 right-2 text-gray-500 hover:text-gray-700 text-lg"
+          className="absolute top-3 right-3 text-gray-500 hover:text-gray-700 text-2xl"
         >
           &times;
         </button>
 
-        <div className="flex items-center bg-green-100 border border-green-200 text-green-500 p-4 rounded-md mb-4">
+        {/* Success Message */}
+        <div className="flex items-center bg-green-50 border border-green-100 text-green-700 p-4 rounded-lg mb-6">
           <svg
-            className="w-6 h-6 mr-3 flex-shrink-0 text-green-500"
+            className="w-6 h-6 mr-3 flex-shrink-0 text-green-600"
             fill="none"
             stroke="currentColor"
             viewBox="0 0 24 24"
@@ -48,17 +46,19 @@ const SuccessModal: React.FC<SuccessModalProps> = ({
           </svg>
           <span className="text-lg font-semibold">{message}</span>
         </div>
+
+        {/* Action Buttons */}
         <div className="flex justify-end space-x-4">
           <button
             onClick={onClose}
-            className="bg-gray-500 text-white py-2 px-4 rounded-md hover:bg-gray-600"
+            className="bg-gray-500 text-white py-2 px-6 rounded-lg hover:bg-gray-600 transition-all"
           >
             Close
           </button>
           {vCart && (
             <button
               onClick={() => router.push("/Cart")}
-              className="bg-yellow-500 text-white py-2 px-4 rounded-md hover:bg-yellow-600"
+              className="bg-blue-500 text-white py-2 px-6 rounded-lg hover:bg-blue-600 transition-all"
             >
               View Cart
             </button>

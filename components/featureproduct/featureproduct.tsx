@@ -1,83 +1,85 @@
-
-import { client } from "@/sanity/lib/client"
-import Image from "next/image"
+import { client } from "@/sanity/lib/client";
+import Image from "next/image";
 import { BsCart3 } from "react-icons/bs";
 import Link from "next/link";
 
+const getData = async () => {
+  const fetchData = await client.fetch(
+    `*[_type == "products"] [4..7]{
+      _id, title, price,
+      "imageUrl": image.asset->url
+    }`
+  );
+  return fetchData;
+};
 
-const getData = async ()=>{
-    const fetchData= await client.fetch(`*[_type == "products"] [4..7]{
-   _id,title,price,
-   "imageUrl":image.asset->url
- }`)
-    return fetchData
+interface Categories {
+  title: string;
+  imageUrl: string;
+  price: number;
+  _id: number;
+}
 
-    };
-    interface catagories{
-      title:string,
-      imageUrl:string,
-      price:number,
-      _id:number
-     
-    }
+const Feature = async () => {
+  const SanityData = await getData();
+  console.log(SanityData);
 
+  return (
+    <div className="px-6 py-12 bg-gray-50">
+      {/* Section Header */}
+      <div className="text-center mb-12">
+        <h1 className="text-3xl lg:text-4xl font-bold text-[#272343] mb-4">
+          Featured Products
+        </h1>
+        <p className="text-lg text-[#6E6E6E]">
+          Explore our handpicked collection of featured products.
+        </p>
+      </div>
 
-    const Feature = async() => {
- 
-   const SanityData = await getData()
-         console.log(SanityData)
+      {/* Products Grid */}
+      <div className="max-w-screen-xl mx-auto grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+        {SanityData.map((item: Categories, i: number) => (
+          <div
+            key={i}
+            className="relative bg-white shadow-lg rounded-xl overflow-hidden transition-transform hover:scale-105 hover:shadow-xl"
+          >
+            {/* Product Image */}
+            <Link href={`/product/${item._id}`}>
+              <div className="relative h-56 w-full">
+                <Image
+                  src={item.imageUrl}
+                  alt={item.title}
+                  fill
+                  className="object-cover"
+                />
+              </div>
+            </Link>
 
-      return (
-        <div>
-          <h1 className="text-center text-4xl mt-20 mb-3 font-extrabold font-serif">Featured Products</h1>
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-5 lg:grid-cols-4">
-        {SanityData.map((item:catagories,i:number)=>{
-          
-            return(
-  
-                 <div key={i} className="gap-6 border shadow-lg hover:scale-105 ">
-                    <Link href={`/product/${item._id}`}>
-              <Image 
-                className="rounded-t-lg h-[250px]"
-                src={item.imageUrl}
-                alt="image"
-                width={300}
-                height={300}
-              />
-              <div className="flex flex-col justify-between p-4 leading-normal">
-                <h5 className="mb-2 text-2xl font-bold tracking-tight text-sky-700 font-serif dark:text-white">
+            {/* Product Details */}
+            <div className="p-4">
+              <Link href={`/product/${item._id}`}>
+                <p className="text-xl font-semibold text-[#272343] hover:text-[#007580] transition-colors">
                   {item.title}
-                </h5>
-                
-                <p className="mb-3 font-normal text-gray-700 dark:text-gray-400">
-                ${item.price}
                 </p>
-         
-                <p className="flex items-center justify-center p-2 rounded-full bg-gray-200 hover:bg-gray-300 cursor-pointer transition duration-300">
-  <BsCart3 className="w-5 h-5 text-gray-700 hover:text-blue-500 transition duration-300" />
-</p>
-        
-      
-      
-
-              </div>
               </Link>
+              <div className="flex items-center mt-2">
+                <p className="text-lg font-bold text-[#007580]">
+                  ${item.price}
+                </p>
               </div>
-            
-              
-           
-            )
-        })}
+            </div>
+
+            {/* Add to Cart Button */}
+            <div className="absolute bottom-4 right-4">
+              <button className="p-2 bg-[#007580] rounded-full hover:bg-[#005f6b] transition-colors">
+                <BsCart3 className="w-6 h-6 text-white" />
+              </button>
+            </div>
+          </div>
+        ))}
       </div>
     </div>
-      )
-    }
-    
-    export default Feature;
+  );
+};
 
-
-
-
-
-
-
+export default Feature;

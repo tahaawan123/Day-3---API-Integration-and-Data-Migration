@@ -17,36 +17,49 @@ interface Categories {
 
 const Categories = async () => {
   const SanityData = await getData();
-  console.log(SanityData);
 
   return (
-    <div className="bg-gray-100 min-h-screen py-16">
-      <h1 className="text-center text-4xl mt-20 mb-8 font-extrabold text-gray-800">Categories</h1>
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 px-4">
-        {SanityData.map((item: Categories, i: number) => {
-          return (
-            <div
-              key={i}
-              className="bg-white rounded-lg shadow-md hover:shadow-xl  transform hover:scale-105 transition-transform duration-300"
-            >
-              <Link href={`/categories/${item._id}`}>
+    <div className="bg-gray-50 min-h-screen py-16">
+      {/* Section Header */}
+      <div className="text-center mb-12">
+        <h1 className="text-4xl lg:text-5xl font-bold text-gray-900 mb-4">
+          Explore Categories
+        </h1>
+        <p className="text-lg text-gray-600">
+          Discover our curated collection of categories
+        </p>
+      </div>
+
+      {/* Categories Grid */}
+      <div className="max-w-screen-xl mx-auto grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 px-4">
+        {SanityData.map((item: Categories, i: number) => (
+          <div
+            key={i}
+            className="bg-white rounded-xl shadow-md hover:shadow-xl transition-shadow duration-300 overflow-hidden group"
+          >
+            <Link href={`/categories/${item._id}`}>
+              {/* Category Image */}
+              <div className="relative h-64 w-full">
                 <Image
-                  className="rounded-t-lg h-[300px] object-cover"
                   src={item.imageUrl}
-                  alt="image"
-                  width={420}
-                  height={300}
+                  alt={item.title}
+                  fill
+                  className="object-cover transition-transform duration-300 group-hover:scale-105"
                 />
-                <div className="p-4">
-                  <h5 className="mb-3 text-2xl font-bold text-gray-900">{item.title}</h5>
-                  <button className="w-full bg-black text-white py-3 rounded-md hover:bg-gray-800 transform hover:scale-105 transition duration-300">
-                    Buy Now
-                  </button>
-                </div>
-              </Link>
-            </div>
-          );
-        })}
+              </div>
+
+              {/* Category Details */}
+              <div className="p-6">
+                <h3 className="text-2xl font-semibold text-gray-800 mb-4">
+                  {item.title}
+                </h3>
+                <button className="w-full bg-gray-900 text-white py-3 rounded-lg hover:bg-gray-800 transition-colors">
+                  Explore Now
+                </button>
+              </div>
+            </Link>
+          </div>
+        ))}
       </div>
     </div>
   );

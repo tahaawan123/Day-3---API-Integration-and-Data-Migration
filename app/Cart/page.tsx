@@ -13,7 +13,7 @@ import "react-toastify/dist/ReactToastify.css";
 
 interface Product {
   imageUrl: string | StaticImport;
-  id: number;
+  _id: number;
   title: string;
   price: number;
   image: string;
@@ -38,7 +38,7 @@ const Cart = () => {
   }, []);
 
   const handleRemoveFromCart = (id: number) => {
-    const updatedCart = cart.filter((item) => item.id !== id);
+    const updatedCart = cart.filter((item) => item._id !== id);
     if (updatedCart.length === cart.length) {
       console.warn("Product not found in the cart!");
     }
@@ -49,7 +49,7 @@ const Cart = () => {
 
   const handleQuantityChange = (id: number, delta: number) => {
     const updatedCart = cart.map((item) => {
-      if (item.id === id) {
+      if (item._id === id) {
         const newQuantity = item.quantity + delta;
         if (newQuantity > 0) {
           return { ...item, quantity: newQuantity };
@@ -107,7 +107,7 @@ const Cart = () => {
         ) : (
           <div className="bg-white shadow-lg rounded-lg p-6 mb-8 space-y-6">
             {cart.map((product) => (
-              <div key={product.id} className="flex items-center justify-between border-b pb-6 transition hover:shadow-xl rounded-lg p-4 hover:bg-gray-50">
+              <div key={product._id} className="flex items-center justify-between border-b pb-6 transition hover:shadow-xl rounded-lg p-4 hover:bg-gray-50">
                 <div className="flex items-center gap-6">
                   <Image src={product.imageUrl} alt={product.title} width={100} height={100} className="rounded-lg border object-cover" />
                   <div className="flex flex-col">
@@ -115,18 +115,18 @@ const Cart = () => {
                     <p className="text-sm text-gray-600">Price: ${(typeof product.price === 'number' ? product.price : parseFloat(product.price)).toFixed(2)}</p>
 
                     <div className="flex items-center space-x-4 gap-2">
-                      <button onClick={() => handleQuantityChange(product.id, -1)} disabled={product.quantity === 1} className="bg-red-400 px-3 py-1 rounded-lg text-white hover:bg-red-600 transition duration-200">
+                      <button onClick={() => handleQuantityChange(product._id, -1)} disabled={product.quantity === 1} className="bg-red-400 px-3 py-1 rounded-lg text-white hover:bg-red-600 transition duration-200">
                         <FaMinus />
                       </button>
                       <span className="text-lg font-medium">{product.quantity}</span>
-                      <button onClick={() => handleQuantityChange(product.id, 1)} className="bg-green-500 px-3 py-1 rounded-lg text-white hover:bg-yellow-600 transition duration-200">
+                      <button onClick={() => handleQuantityChange(product._id, 1)} className="bg-green-500 px-3 py-1 rounded-lg text-white hover:bg-yellow-600 transition duration-200">
                         <FaPlus />
                       </button>
                     </div>
                   </div>
                 </div>
                 <button
-                  onClick={() => handleRemoveFromCart(product.id)}
+                  onClick={() => handleRemoveFromCart(product._id)}
                   className="text-gray-500 hover:text-red-600"
                 >
                   <FaTrashAlt />
